@@ -1,0 +1,2469 @@
+* {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   GENERAL
+   ========================================================= */
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #f6f7fb;
+  color: #202338;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-weight: 750;
+  background: #656ec3;
+  color: #fff;
+  touch-action: manipulation;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+  height: 84px;
+  background: #fff;
+  border-bottom: 1px solid #dfe2ee;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 8px 22px;
+
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+header img {
+  height: 62px;
+  max-width: 220px;
+  object-fit: contain;
+}
+
+#status {
+  color: #70758a;
+  font-size: 0.9rem;
+}
+
+/* =========================================================
+   HEADER CONTROLS
+   ========================================================= */
+
+.home-button {
+  padding: 0;
+
+  background: transparent;
+
+  border-radius: 0;
+  
+  position: relative;
+}
+
+.home-button img {
+  display: block;
+}
+
+#appVersion {
+  position: absolute;
+
+  right: 0;
+  bottom: 0;
+
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 500;
+
+  color: #70758a;
+
+  pointer-events: none;
+}
+
+.header-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+
+.settings-menu {
+  position: relative;
+}
+
+
+/* Gear button */
+
+.settings-button {
+  width: 46px;
+  height: 46px;
+
+  padding: 0;
+
+  display: grid;
+  place-items: center;
+
+  background: #656ec3;
+  color: #fff;
+
+  border-radius: 10px;
+
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+
+/* Drop-down menu */
+
+.settings-dropdown {
+  display: none;
+
+  position: absolute;
+
+  top: calc(100% + 8px);
+  right: 0;
+
+  width: 230px;
+
+  padding: 6px;
+
+  background: #fff;
+
+  border: 1px solid #dfe2ee;
+  border-radius: 12px;
+
+  box-shadow:
+    0 8px 24px #20233830;
+
+  z-index: 20;
+}
+
+
+.settings-dropdown.open {
+  display: grid;
+}
+
+
+.settings-dropdown button {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  background: transparent;
+  color: #202338;
+
+  border-radius: 8px;
+
+  text-align: left;
+
+  white-space: nowrap;
+  
+  font-weight: 500;
+}
+
+.settings-dropdown button:hover {
+  background: #f0f1f7;    // grey color
+}
+
+.settings-dropdown button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.settings-dropdown button:disabled:hover {
+  background: transparent;
+}
+
+.settings-dropdown button:active {
+  background: #e5e7f2;
+}
+
+/*
+ * App update notification.
+ *
+ * Normally hidden. JavaScript reveals it
+ * only when a newer application version
+ * has been detected.
+ */
+
+.settings-dropdown .update-available[hidden] {
+  display: none;
+}
+
+.settings-dropdown .update-available:disabled {
+  color: #a0a3af;
+  cursor: default;
+}
+
+.settings-dropdown .update-available:disabled:hover {
+  background: transparent;
+}
+
+
+/* =========================================================
+   PAGES
+   ========================================================= */
+
+.page {
+  display: none;
+  padding: 18px;
+}
+
+.page.active {
+  display: block;
+}
+
+
+/* =========================================================
+   SUMMARY PAGE
+   ========================================================= */
+.summary-table {
+  width: 100%;
+  max-width: 700px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.summary-table th,
+.summary-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #ddd;
+}
+
+.summary-table thead th {
+  vertical-align: top;
+}
+
+.summary-table th:first-child {
+  width: 36%;
+  text-align: left;
+}
+
+.summary-table th:not(:first-child),
+.summary-table td:not(:first-child) {
+  width: 16%;
+  text-align: right;
+}
+
+.summary-subhead {
+  margin-top: 2px;
+  font-size: 0.75em;
+  font-weight: normal;
+  opacity: 0.6;
+}
+
+/* Detailed item sales */
+
+.summary-item-detail {
+  width: 100%;
+  max-width: 700px;
+  margin-top: 18px;
+}
+
+.summary-history-status {
+  min-height: 0;
+
+  color: #70758a;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  text-align: center;
+}
+
+.summary-history-status:not(:empty) {
+  margin-bottom: 8px;
+}
+
+
+/*
+ * Individual-item Summary sorting.
+ *
+ * The numeric column headings themselves
+ * act as the sort controls.
+ */
+
+.summary-sort-heading {
+  cursor: pointer;
+  user-select: none;
+
+  color: #70758a;
+  font-weight: 500;
+  
+  white-space: nowrap;
+}
+
+.summary-sort-heading:hover {
+  color: #202338;
+}
+
+.summary-sort-heading.active {
+  color: #202338;
+  font-weight: 700;
+}
+
+.summary-sort-heading.active::before {
+  content: "\2193";    /* \00a0 = non-breaking space; \2193 = ↓ */
+  position: absolute;
+  transform: translate(-14px, -3px);
+}
+
+.summary-item-scroll {
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+.summary-item-table {
+  width: 100%;
+}
+
+/*
+ * Match the detailed Item Sales columns
+ * to the main Summary columns.
+ */
+
+.summary-item-table th:first-child {
+  width: 36%;
+}
+
+.summary-item-table th {
+  font-weight: 500;
+  padding-left: 50px;
+}
+
+.summary-item-table td:empty::after {
+  content: "\00a0";
+}
+   
+/* =========================================================
+   POS - LANDSCAPE / DESKTOP DEFAULT
+   ========================================================= */
+
+#pos.active {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    330px;
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   CATEGORIES
+   ========================================================= */
+
+.cats {
+  display: flex;
+  gap: 8px;
+
+  overflow: auto;
+
+  margin-bottom: 12px;
+}
+
+.cats button {
+  background: #fff;
+  color: #202338;
+
+  border: 1px solid #dfe2ee;
+  border-radius: 999px;
+
+  white-space: nowrap;
+}
+
+.cats button.active {
+  background: #656ec3;
+  color: #fff;
+}
+
+
+/* =========================================================
+   PRODUCTS
+   ========================================================= */
+
+.products {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fill,
+      minmax(145px, 1fr)
+    );
+
+  gap: 12px;
+}
+
+.product {
+  height: 100px;
+
+  background: #fff;
+  color: #202338;
+
+  text-align: left;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  position: relative;
+
+  box-shadow:
+    0 2px 10px #28304a12;
+}
+
+.product .price {
+  color: #6f7488;
+}
+
+.qty {
+  position: absolute;
+
+  right: 8px;
+  bottom: 8px;
+
+  background: #656ec3;
+  color: #fff;
+
+  border-radius: 99px;
+
+  min-width: 30px;
+  height: 30px;
+
+  display: grid;
+  place-items: center;
+}
+
+
+/* =========================================================
+   CURRENT SALE
+   ========================================================= */
+
+aside {
+  background: #fff;
+
+  border-radius: 16px;
+
+  padding: 18px;
+
+  align-self: start;
+
+  position: sticky;
+  top: 160px;
+}
+
+aside h2 {
+  margin: 0;
+}
+
+
+/* =========================================================
+   CART LINES
+   ========================================================= */
+
+.line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;   /* CART ITEM + AMOUNT SIZE */
+  padding: 9px 0;
+  border-bottom: 1px solid #e3e5ee;
+}
+
+
+/* =========================================================
+   TOTAL / CASH RECEIVED / CHANGE
+   ========================================================= */
+
+.sale-totals {
+  padding: 12px 0 16px;
+}
+
+.sale-total-line {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 50px;
+
+  font-size: 1.45rem;
+}
+
+.sale-total-line > span,
+.sale-total-line > label {
+  padding-left: 10px;
+  font-size: 1.20rem; /* Total, Cash Received and Change LABEL SIZE */
+  font-weight: 400;
+}
+
+/*
+ * Total and Change amounts.
+ */
+
+.sale-total-line > b {
+  width: 120px;
+  font-size: 1.20rem; /* TOTAL + CHANGE AMOUNT SIZE */
+  font-weight: 600;
+  text-align: right;
+  padding-right: 8px;
+}
+
+/* Cash Received input */
+
+.cash-received-line input {
+  width: 120px;
+  padding: 5px 8px;
+  border: 1px solid #dfe2ee;
+  border-radius: 8px;
+  background: #fff;
+  color: #202338;
+
+  font-size: 1.20rem; /* CASH RECEIVED AMOUNT SIZE */
+  font-weight: 600;
+
+  text-align: right;
+}
+
+
+/*
+ * Hide browser number-input arrows.
+ * This makes the Cash Received field cleaner
+ * for a touch-screen POS.
+ */
+
+.cash-received-line input::-webkit-outer-spin-button,
+.cash-received-line input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.cash-received-line input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+
+/* =========================================================
+   PAYMENT BUTTONS
+   ========================================================= */
+
+.pay {
+  display: grid;
+
+  /*
+   * CASH and CREDIT are equal width.
+   * CLEAR is slightly narrower.
+   */
+
+  grid-template-columns:
+    1fr
+    1fr
+    0.72fr;
+
+  gap: 10px;
+}
+
+.pay button {
+  padding: 20px 8px;
+}
+
+.pay #cash,
+.pay #credit {
+  background: #656ec3;
+}
+
+.pay #cash:disabled,
+.pay #credit:disabled {
+  background: #aeb3dc;
+  color: #ffffff;
+  opacity: 1;
+}
+
+
+/* =========================================================
+   COMMON BUTTON STYLES
+   ========================================================= */
+
+.light {
+  background: #eceef5;
+  color: #202338;
+}
+
+.danger {
+  background: #bd3545;
+}
+
+/* Confirmation dialog Confirm button */
+dialog .danger {
+  background: #656ec3;  /* blue color */
+}
+
+/* =========================================================
+   MANAGE ITEMS / TRANSACTIONS
+   ========================================================= */
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+}
+
+.head h1,
+.head p {
+  margin: 0;
+}
+
+.head p {
+  color: #70758a;
+  margin-top: 4px;
+}
+
+.row {
+  background: #fff;
+
+  border:
+    1px solid #dfe2ee;
+
+  border-radius: 13px;
+
+  padding: 14px;
+  margin: 9px 0;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr auto;
+
+  gap: 10px;
+}
+
+.meta {
+  color: #70758a;
+
+  font-size: 0.9rem;
+
+  margin-top: 4px;
+}
+
+.actions {
+  display: flex;
+
+  gap: 8px;
+
+  align-items: center;
+}
+
+/* =========================================================
+   MANAGE ITEMS - FIXED HEADER / SCROLLING LIST
+   ========================================================= */
+
+#items.active {
+  height: calc(100dvh - 84px);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+
+/*
+ * Keep the Manage Items header and
+ * Add Item button fixed at the top.
+ */
+
+#items .head {
+  flex: 0 0 auto;
+}
+
+
+/*
+ * Only the item list scrolls.
+ */
+
+#itemList {
+  flex: 1 1 auto;
+
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+
+  padding-bottom: 18px;
+}
+
+/* =========================================================
+   MANAGE TRANSACTIONS - FIXED HEADER / SCROLLING LIST
+   ========================================================= */
+
+#tx.active {
+  height: calc(100dvh - 84px);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+
+/*
+ * Keep the Manage Transactions header
+ * and Refresh button fixed at the top.
+ */
+
+#tx .head {
+  flex: 0 0 auto;
+}
+
+
+/*
+ * Keep the transaction filters fixed too.
+ */
+
+#tx .filters {
+  flex: 0 0 auto;
+
+  margin-bottom: 10px;
+}
+
+.date-range-filter {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+
+.date-range-filter label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+.date-range-filter label span {
+  color: #70758a;
+  font-size: 0.9rem;
+}
+
+
+.date-range-filter input {
+  width: 145px;   /* FROM / TO DATE BOX WIDTH */
+  padding: 10px;
+
+  border: 1px solid #dfe2ee;
+  border-radius: 8px;
+
+  background: #fff;
+}
+
+
+/* Keep Clear Filters at the far right of the filter row. */
+.clear-filters {
+  margin-left: auto;
+  padding: 10px 12px;
+}
+
+/* Transaction total */
+
+.transaction-total {
+  position: relative;
+  
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+  padding: 10px 14px;
+
+  background: #fff;
+
+  border: 1px solid #dfe2ee;
+  border-radius: 10px;
+
+  font-size: 1.15rem;
+}
+
+
+.transaction-count,
+.transaction-amount {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+.transaction-count b,
+.transaction-amount b {
+  font-size: 1.35rem;
+}
+
+
+.transaction-amount {
+  margin-left: auto;
+}
+
+.transaction-total b {
+  font-size: 1.35rem;
+}
+
+
+/*
+ * Historical transaction lookup status.
+ *
+ * This is intentionally quieter than
+ * the transaction count and total.
+ */
+.transaction-history-status {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  color: #70758a;
+  font-size: 0.8rem;
+
+  white-space: nowrap;
+}
+
+/*
+ * Only the transaction list scrolls.
+ */
+
+#txList {
+  flex: 1 1 auto;
+
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+
+  padding-bottom: 18px;
+}
+
+/* =========================================================
+   TRANSACTION FILTERS
+   ========================================================= */
+
+.filters {
+  display: flex;
+
+  gap: 10px;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+}
+
+.filters input,
+.filters select,
+dialog input {
+  padding: 10px;
+
+  border:
+    1px solid #dfe2ee;
+
+  border-radius: 8px;
+
+  background: #fff;
+}
+
+.txitems {
+  margin-top: 8px;
+
+  border-top:
+    1px solid #e3e5ee;
+
+  padding-top: 8px;
+}
+
+
+
+
+/* All Items multi-select filter */
+.item-filter {
+  position: relative;
+}
+
+.item-filter summary {
+  min-width: 145px;
+  padding: 10px 34px 10px 12px;
+  border: 1px solid #dfe2ee;
+  border-radius: 8px;
+  background: #fff;
+  cursor: default;
+  list-style: none;
+  user-select: none;
+  position: relative;
+}
+
+.item-filter[open] summary {
+  border-color: #000;
+  outline: 1px solid #000;
+  outline-offset: 0;
+}
+
+.item-filter summary::-webkit-details-marker {
+  display: none;
+}
+
+/*
+ * Use the exact same arrow for the All Payments select and
+ * the All Items multi-select so the two controls match on
+ * every browser/device.
+ */
+.item-filter summary {
+  padding-right: 34px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #5f6368 50%),
+    linear-gradient(135deg, #5f6368 50%, transparent 50%);
+  background-position:
+    calc(100% - 15px) 50%,
+    calc(100% - 11px) 50%;
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+}
+
+
+/*
+ * Make the checkbox menu behave visually like the native
+ * All payments drop-down: square corners and touching the
+ * bottom edge of the control rather than floating below it.
+ */
+.item-filter-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 30;
+  min-width: 100%;
+  width: max-content;
+  max-width: 320px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #767676;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.item-filter-menu label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 29px;
+  padding: 4px 12px;
+  white-space: nowrap;
+  font-weight: 400;
+  cursor: default;
+}
+
+.item-filter-menu label:hover {
+  background: #1967d2;
+  color: #fff;
+}
+
+.item-filter-menu input {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Payment filter.
+ *
+ * Uses the same custom drop-down shell as
+ * the All Transactions / item filter.
+ */
+
+.payment-filter-menu button {
+  display: block;
+
+  width: 100%;
+
+  min-height: 29px;
+
+  padding: 4px 12px;
+
+  background: #fff;
+  color: #202338;
+
+  border-radius: 0;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  font-weight: 400;
+}
+
+
+.payment-filter-menu button:hover {
+  background: #1967d2;
+  color: #fff;
+}
+
+
+.payment-filter-menu button:active {
+  background: #e5e7f2;
+}
+
+.transaction-id {
+  font-size: 0.80em;
+}
+
+.transaction-item-detail {
+  display: grid;
+
+  grid-template-columns:
+    120px   /* Item name */
+    90px    /* Price each */
+    65px    /* Quantity sold */
+    75px;   /* Total */
+
+  column-gap: 14px;
+
+  padding: 3px 0;
+
+  align-items: center;
+}
+
+.transaction-item-name,
+.transaction-item-price,
+.transaction-item-quantity,
+.transaction-item-total {
+  white-space: nowrap;
+}
+
+.transaction-item-name {
+  padding-left: 10px;
+}
+
+.transaction-item-price,
+.transaction-item-quantity,
+.transaction-item-total {
+  text-align: right;
+}
+
+.item-sale-detail {
+  display: grid;
+
+  grid-template-columns:
+    170px   /* Date / Time */
+    50px    /* Cash / Credit */
+    90px    /* Price each */
+    65px    /* Quantity sold */
+    75px    /* Total */
+    minmax(120px, 1fr);   /* Transaction ID */
+  
+  column-gap: 14px;
+
+  padding: 5px 0;
+
+  align-items: center;
+}
+
+.item-sale-date,
+.item-sale-payment,
+.item-sale-price,
+.item-sale-quantity,
+.item-sale-total,
+.item-sale-id {
+  white-space: nowrap;
+}
+
+.item-sale-price,
+.item-sale-quantity,
+.item-sale-total {
+  text-align: right;
+}
+
+.item-sale-id {
+  padding-left: 5px;
+}
+
+/* Category combo box in the Add/Edit windows */
+
+.category-combo {
+  position: relative;
+}
+
+.category-combo #icat {
+  width: 100%;
+  padding-right: 42px;
+}
+
+.category-dropdown-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 40px;
+  height: 100%;
+
+  padding: 0;
+
+  background: transparent;
+  color: #5f6368;
+
+  border-radius: 0;
+
+  font-size: 0.75rem;
+}
+
+.category-dropdown {
+  display: none;
+
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  z-index: 40;
+
+  max-height: 220px;
+  overflow-y: auto;
+
+  background: #fff;
+
+  border: 1px solid #767676;
+}
+
+.category-dropdown.open {
+  display: block;
+}
+
+.category-dropdown-option {
+  padding: 8px 10px;
+
+  font-weight: 400;
+
+  cursor: default;
+}
+
+.category-dropdown-option:hover {
+  background: #f0f1f7;    // grey color
+  color: #202338;
+}
+
+
+/* =========================================================
+   DIALOGS
+   ========================================================= */
+
+dialog {
+  border: 0;
+
+  border-radius: 16px;
+
+  min-width:
+    min(430px, 90vw);
+}
+
+dialog::backdrop {
+  background: #20233888;
+}
+
+dialog form {
+  display: grid;
+
+  gap: 13px;
+}
+
+dialog label {
+  display: grid;
+
+  gap: 5px;
+
+  font-weight: 650;
+}
+
+/* Move Add/Edit Item dialog slightly upward */
+#itemDlg {
+  transform: translateY(-30px);
+}
+
+/* Inventory fields */
+.inventory-fields {
+  display: grid;
+  gap: 8px;
+}
+
+.current-inventory {
+  font-size: 0.95rem;
+  color: #70758a;
+}
+
+.current-inventory b {
+  color: #202338;
+}
+
+.check {
+  display: flex;
+
+  align-items: center;
+}
+
+dialog form > div {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+}
+
+
+/* =========================================================
+   HELP
+   ========================================================= */
+
+.help-content {
+  max-width: 700px;
+
+  padding-bottom: 30px;
+}
+
+.help-content h2 {
+  margin:
+    26px 0
+    8px;
+
+  font-size: 1.2rem;
+}
+
+.help-content h2:first-child {
+  margin-top: 0;
+}
+
+.help-content h3 {
+  margin:
+    18px 0
+    6px;
+
+  font-size: 1rem;
+}
+
+.help-content p {
+  margin:
+    0 0
+    10px;
+
+  color: #50556a;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+#toast {
+  position: fixed;
+
+  left: 50%;
+  bottom: 25px;
+
+  transform:
+    translate(-50%, 25px);
+
+  opacity: 0;
+  
+  pointer-events: none;
+
+  background: #202338;
+  color: #fff;
+
+  padding: 11px 17px;
+
+  border-radius: 9px;
+
+  transition: 0.2s;
+
+  z-index: 20;
+}
+
+#toast.show {
+  opacity: 1;
+
+  transform:
+    translate(-50%, 0);
+}
+
+
+/* =========================================================
+   PORTRAIT TABLET
+   ========================================================= */
+
+@media (
+  orientation: portrait
+) {
+
+  /*
+   * Prevent the POS page itself from scrolling.
+   *
+   * Header = 84px.
+   * Navigation is approximately 48px.
+   *
+   * The POS area occupies the rest of the viewport.
+   */
+
+  body:has(#pos.active) {
+    overflow: hidden;
+  }
+
+
+  #pos.active {
+    /*
+     * Fill the available screen beneath
+     * the 84px header.
+     */
+
+    height:
+      calc(
+        100dvh - 84px
+      );
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    /*
+     * Product section gets all remaining room.
+     * Current Sale gets only the height it needs.
+     */
+
+    grid-template-rows:
+      minmax(0, 1fr)
+      auto;
+
+    gap: 12px;
+
+    padding: 12px 18px 18px;
+
+    overflow: hidden;
+  }
+
+
+  /*
+   * First child contains:
+   *
+   * Categories
+   * Products
+   *
+   * It becomes its own vertical layout.
+   */
+
+  #pos.active > div:first-child {
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+  }
+
+
+  /*
+   * Category buttons remain visible.
+   */
+
+  #pos.active .cats {
+    flex: 0 0 auto;
+
+    margin-bottom: 10px;
+  }
+
+
+  /*
+   * ONLY the item/product area scrolls.
+   */
+
+  #pos.active .products {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    padding-bottom: 4px;
+
+    grid-template-columns:
+      repeat(4, 1fr);
+
+    /* Keep every product row the same height */
+    grid-auto-rows: 100px;
+
+    /* Prevent rows from stretching vertically */
+    align-content: start;
+  }
+
+
+  /*
+   * Current Sale stays at the bottom.
+   */
+
+  #pos.active aside {
+    position: static;
+
+    width: 100%;
+
+    align-self: end;
+
+    padding: 14px 18px;
+
+    border-radius: 16px;
+
+    /*
+     * It never participates in product scrolling.
+     */
+
+    overflow: visible;
+  }
+
+
+  /*
+   * Keep the cart from making Current Sale
+   * grow excessively if many different items
+   * are selected.
+   */
+
+  #pos.active #cart {
+    /*
+     * Fixed space for exactly 5 cart-item rows.
+     * Additional items scroll inside this area.
+     */
+
+    height: 185px;
+    min-height: 185px;
+    max-height: 185px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+
+  #pos.active .line {
+    height: 37px;
+
+    padding: 6px 0;
+
+    align-items: center;
+  }
+
+  #pos.active .sale-totals {
+    padding: 6px 0 10px;
+  }
+
+
+  #pos.active .sale-total-line {
+    min-height: 43px;
+  }
+
+
+  #pos.active .pay button {
+    padding: 17px 8px;
+  }
+
+}
+
+
+/* =========================================================
+   NARROW SCREENS and LANDSCAPE
+   ========================================================= */
+
+/* =========================================================
+   LANDSCAPE TABLET
+   ========================================================= */
+
+@media (orientation: landscape) {
+
+  /*
+   * The POS page itself does not scroll.
+   * Products get their own scrolling area.
+   */
+
+  body:has(#pos.active) {
+    overflow: hidden;
+  }
+
+
+  #pos.active {
+    /*
+     * Fill the screen below the 84px header
+     */
+
+    height:
+      calc(
+        100dvh - 84px
+      );
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      330px;
+
+    gap: 18px;
+
+    padding: 18px;
+
+    overflow: hidden;
+  }
+
+
+  /*
+   * Left side contains:
+   *
+   * Categories
+   * Products
+   *
+   * Categories stay at the top.
+   * Products use the remaining space.
+   */
+
+  #pos.active > div:first-child {
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+  }
+
+
+  /*
+   * CATEGORY BUTTONS
+   *
+   * These do not participate in the vertical
+   * scrolling of the product grid.
+   */
+
+  #pos.active .cats {
+    flex: 0 0 auto;
+
+    margin-bottom: 12px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+
+  /*
+   * PRODUCT BUTTONS
+   *
+   * This is the only vertically scrolling
+   * section on the left side.
+   */
+
+  #pos.active .products {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    overscroll-behavior: contain;
+
+    align-content: start;
+
+    grid-auto-rows: 100px;
+
+    padding-bottom: 4px;
+  }
+
+
+  /*
+   * CURRENT SALE
+   *
+   * Fixed on the right.
+   * It does not scroll with the products.
+   */
+
+  #pos.active aside {
+    position: static;
+
+    align-self: stretch;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+  }
+
+/*
+  #pos.active aside h2 {
+    margin:
+      0 0 8px;
+  }
+*/
+
+  /*
+   * CART
+   *
+   * Reserve exactly enough vertical room
+   * for 5 cart lines.
+   *
+   * Additional items scroll inside this area.
+   */
+
+  #pos.active #cart {
+    flex: 1 1 auto;
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+
+  /*
+   * Each cart line is exactly 37px tall.
+   *
+   * 37px × 3 = 111px
+   */
+
+  #pos.active .line {
+    height: 37px;
+
+    padding: 6px 0;
+
+    align-items: center;
+  }
+
+
+  /*
+   * Keep the Total/Cash Received/Change section
+   * compact and consistent.
+   */
+
+  #pos.active .sale-totals {
+    flex: 0 0 auto;
+    padding: 6px 0 10px;
+  }
+
+
+  #pos.active .sale-total-line {
+    min-height: 43px;
+  }
+
+  #pos.active .pay {
+    flex: 0 0 auto;
+  }
+
+  #pos.active .pay button {
+    padding: 17px 8px;
+  }
+
+}
+
+
+/* =========================================================
+   NARROW LANDSCAPE TABLETS
+   ========================================================= */
+
+@media (
+  max-width: 850px
+) and (
+  orientation: landscape
+) {
+
+  #pos.active {
+    grid-template-columns:
+      minmax(0, 1fr)
+      300px;
+  }
+
+
+  .products {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+}
+/* =========================================================
+   PORTRAIT - CURRENT SALE TWO-COLUMN LAYOUT
+   ========================================================= */
+
+@media (orientation: portrait) {
+
+  /*
+   * Current Sale layout:
+   *
+   *   Current Sale heading
+   *   -------------------------------
+   *   Item list   |  Total / Cash / Change
+   *   -------------------------------
+   *   Payment buttons
+   */
+
+  #pos.active aside {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    column-gap: 16px;
+    row-gap: 6px;
+  }
+
+  #pos.active aside h2 {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  /* Left column: selected item list. */
+  #pos.active #cart {
+    grid-column: 1;
+    grid-row: 2;
+
+    height: 185px;
+    min-height: 185px;
+    max-height: 185px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-right: 14px;
+  }
+
+  /* Right column: Total / Cash Received / Change. */
+  #pos.active .sale-totals {
+    grid-column: 2;
+    grid-row: 2;
+
+    height: 185px;
+
+    padding: 0 0 0 16px;
+
+    border-left: 1px solid #dfe2ee;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #pos.active .sale-total-line {
+    min-height: 42px;
+  }
+
+  /* Smaller labels in the compact portrait layout. */
+  #pos.active .sale-total-line > span,
+  #pos.active .sale-total-line > label {
+    padding-left: 0;
+    /*font-size: 1.05rem;*/
+  }
+
+  /* Smaller Total and Change amounts. */
+  #pos.active .sale-total-line > b {
+    width: 125px;
+    padding-right: 4px;
+    /*font-size: 1.35rem;*/
+  }
+
+  /* Smaller Cash Received entry. */
+  #pos.active .cash-received-line input {
+    width: 125px;
+    padding: 4px 3px;
+    /*font-size: 1.35rem;*/
+  }
+
+  /* Payment buttons remain full width below both columns. */
+  #pos.active .pay {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    padding-top: 10px;   /* <-- EXTRA SPACE ABOVE PAYMENT BUTTONS in PORTRAIT*/
+
+  }
+
+}
+
+
+/* =========================================================
+   PHONE - POS
+   ========================================================= */
+
+@media (
+  max-width: 600px
+) and (
+  orientation: portrait
+) {
+
+  /*
+   * Compact header.
+   */
+
+  header {
+    height: 64px;
+    padding: 5px 14px;
+  }
+
+  header img {
+    height: 48px;
+    max-width: 170px;
+  }
+
+  #appVersion {
+    font-size: 8px;
+  }
+
+  .header-right {
+    gap: 10px;
+  }
+
+  #status {
+    font-size: 0.8rem;
+  }
+
+  .settings-button {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 9px;
+
+    font-size: 1.35rem;
+  }
+
+
+  /*
+   * The phone POS fills everything below
+   * the smaller 64px header.
+   */
+
+  #pos.active {
+    height:
+      calc(
+        100dvh - 64px
+      );
+
+    gap: 8px;
+
+    padding: 8px 10px 10px;
+  }
+
+
+  /*
+   * Categories stay on one row.
+   *
+   * If there are more categories than will
+   * fit, only this row scrolls horizontally.
+   */
+
+  #pos.active .cats {
+    gap: 6px;
+
+    margin-bottom: 7px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    flex-wrap: nowrap;
+
+    scrollbar-width: none;
+  }
+
+  #pos.active .cats::-webkit-scrollbar {
+    display: none;
+  }
+
+  #pos.active .cats button {
+    flex: 0 0 auto;
+
+    padding: 8px 14px;
+
+    font-size: 0.9rem;
+  }
+
+
+  /*
+   * Products use four fixed columns.
+   *
+   * The product section scrolls vertically
+   * only -- never horizontally.
+   */
+
+  #pos.active .products {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+
+    grid-auto-rows: 82px;
+
+    gap: 7px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    align-content: start;
+  }
+
+  #pos.active .product {
+    width: 100%;
+    height: 82px;
+
+    min-width: 0;
+
+    padding: 9px 8px;
+
+    font-size: 0.82rem;
+
+    line-height: 1.15;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  #pos.active .product .price {
+    font-size: 0.82rem;
+  }
+
+  #pos.active .qty {
+    right: 5px;
+    bottom: 5px;
+
+    min-width: 23px;
+    height: 23px;
+
+    font-size: 0.72rem;
+  }
+
+
+  /*
+   * Compact Current Sale.
+   */
+
+  #pos.active aside {
+    padding: 9px 12px 10px;
+
+    column-gap: 10px;
+    row-gap: 3px;
+
+    border-radius: 14px;
+  }
+
+  #pos.active aside h2 {
+    font-size: 1.25rem;
+    line-height: 1.1;
+  }
+
+
+  /*
+   * Left side of Current Sale.
+   *
+   * Match its height to the three compact
+   * Total / Cash Received / Change rows.
+   */
+
+  #pos.active #cart {
+    height: 105px;
+    min-height: 105px;
+    max-height: 105px;
+
+    padding-right: 8px;
+  }
+
+  #pos.active .line {
+    height: 35px;
+
+    padding: 5px 0;
+
+    font-size: 0.72rem;
+  }
+
+
+  /*
+   * Right side of Current Sale.
+   */
+
+  #pos.active .sale-totals {
+    height: 105px;
+
+    padding: 0 0 0 10px;
+
+    justify-content: center;
+  }
+
+  #pos.active .sale-total-line {
+    min-height: 35px;
+
+    font-size: 0.9rem;
+  }
+
+  #pos.active .sale-total-line > span,
+  #pos.active .sale-total-line > label {
+    padding-left: 0;
+
+    font-size: 0.82rem;
+
+    line-height: 1.05;
+  }
+
+  #pos.active .sale-total-line > b {
+    width: 82px;
+
+    padding-right: 2px;
+
+    font-size: 0.9rem;
+  }
+
+  #pos.active .cash-received-line input {
+    width: 82px;
+
+    padding: 3px 4px;
+
+    font-size: 0.9rem;
+  }
+
+
+  /*
+   * Compact payment buttons.
+   *
+   * Their existing relative widths are
+   * intentionally preserved.
+   */
+
+  #pos.active .pay {
+    padding-top: 4px;
+
+    gap: 7px;
+  }
+
+  #pos.active .pay button {
+    padding: 11px 5px;
+
+    font-size: 0.9rem;
+  }
+
+  /* =====================================================
+     MANAGE TRANSACTIONS - PHONE
+     ===================================================== */
+
+  #tx.active,
+  #items.active,
+  #summary.active,
+  #help.active  {
+    height: calc(100dvh - 64px);
+    padding: 12px 10px 10px;
+    font-size: 0.80rem;
+  }
+
+  /*
+   * Smaller headings
+   */
+
+  #tx .head,
+  #items .head,
+  #summary .head,
+  #help .head  {
+    margin-bottom: 10px;
+  }
+
+  #tx .head h1,
+  #items .head h1,
+  #summary .head h1,
+  #help .head h1 {
+    font-size: 1.65rem;
+  }
+
+
+  /*
+   * FILTER LAYOUT
+   *
+   * Row 1: From / To
+   * Row 2: All Payments / All Transactions
+   * Row 3: Clear Filters
+   */
+
+  #tx .filters {
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    gap: 8px;
+
+    align-items: center;
+
+    margin-bottom: 8px;
+  }
+
+
+  /*
+   * Make the date-range wrapper disappear
+   * from the grid layout so its two labels
+   * become the two columns of row 1.
+   */
+
+  #tx .date-range-filter {
+    display: contents;
+  }
+
+
+  #tx .date-range-filter label {
+    min-width: 0;
+
+    display: grid;
+
+    grid-template-columns:
+      auto
+      minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 5px;
+
+    font-size: 0.76rem;
+  }
+
+
+  #tx .date-range-filter label span {
+    font-size: 0.76rem;
+  }
+
+
+  #tx .date-range-filter input {
+    width: 100%;
+    min-width: 0;
+
+    padding: 7px 4px;
+
+    font-size: 0.76rem;
+  }
+
+
+  /*
+   * Row 2:
+   * All Payments / All Transactions.
+   */
+
+  #tx #paymentFilter,
+  #tx #itemFilter {
+    width: 100%;
+    min-width: 0;
+  }
+
+
+  #tx #paymentFilter summary,
+  #tx #itemFilter summary {
+    width: 100%;
+    min-width: 0;
+
+    padding:
+      8px 28px
+      8px 9px;
+
+    font-size: 0.78rem;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+  /*
+   * Row 3:
+   * Clear Filters aligned right.
+   */
+
+  #tx .clear-filters {
+    grid-column: 1 / -1;
+
+    justify-self: end;
+
+    margin-left: 0;
+
+    padding: 7px 10px;
+
+    font-size: 0.76rem;
+  }
+
+
+  /*
+   * Transactions / Total summary.
+   */
+
+  #tx .transaction-total {
+    margin-bottom: 8px;
+
+    padding: 8px 10px;
+
+    font-size: 0.82rem;
+  }
+
+
+  #tx .transaction-count,
+  #tx .transaction-amount {
+    gap: 6px;
+  }
+
+
+  #tx .transaction-count b,
+  #tx .transaction-amount b,
+  #tx .transaction-total b {
+    font-size: 1rem;
+  }
+
+
+  #tx .transaction-history-status {
+    font-size: 0.68rem;
+  }
+
+
+  /*
+   * Individual transaction block.
+   */
+
+  #txList .row {
+    padding: 10px;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto;
+
+    gap: 8px;
+
+    font-size: 0.78rem;
+  }
+
+
+  /*
+   * Critical:
+   * allow the left side of the transaction
+   * to shrink instead of pushing Delete
+   * off the right edge.
+   */
+
+  #txList .row > div:first-child {
+    min-width: 0;
+  }
+
+  #tx .transaction-id {
+    font-size: 0.6rem;
+  }
+
+  #tx .meta {
+    margin-top: 3px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+
+  /*
+   * Compact Delete button.
+   */
+
+  #tx .deltx {
+    padding: 6px 9px;
+
+    font-size: 0.70rem;
+
+    border-radius: 7px;
+  }
+
+
+  /*
+   * Item details:
+   *
+   * Sticker 1 | $1 each | 1 sold | $1
+   *
+   * All four values remain on one row.
+   */
+
+  #tx .txitems {
+    margin-top: 7px;
+
+    padding-top: 7px;
+  }
+
+
+  #tx .transaction-item-detail {
+    width: 100%;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      62px   /* Price each */
+      48px   /* Quantity sold */
+      42px;  /* Total */
+
+    column-gap: 12px;
+
+    padding: 3px 0;
+
+    font-size: 0.72rem;
+  }
+
+
+  #tx .transaction-item-name {
+    min-width: 0;
+
+    padding-left: 4px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+  #tx .transaction-item-price,
+  #tx .transaction-item-quantity,
+  #tx .transaction-item-total {
+    white-space: nowrap;
+  }
+  
+  
+  /*
+   * SUMMARY PAGE
+   *
+   * Keep the existing vertical spacing,
+   * but make all five columns fit within
+   * the phone screen.
+   */
+
+  #summary .summary-table th,
+  #summary .summary-table td {
+    padding-left: 3px;
+    padding-right: 3px;
+
+    font-size: 0.82rem;
+  }
+
+
+  /*
+   * Use all available horizontal space.
+   *
+   * Description = 28%
+   * Today       = 15%
+   * Event       = 15%
+   * Month       = 21%
+   * YTD         = 21%
+   */
+
+  #summary .summary-table th:first-child,
+  #summary .summary-item-table th:first-child {
+    width: 28%;
+  }
+
+  #summary .summary-table th:not(:first-child),
+  #summary .summary-table td:not(:first-child) {
+    width: auto;
+  }
+
+  #summary .summary-table th:nth-child(2),
+  #summary .summary-table td:nth-child(2),
+  #summary .summary-table th:nth-child(3),
+  #summary .summary-table td:nth-child(3) {
+    width: 15%;
+  }
+
+  #summary .summary-table th:nth-child(4),
+  #summary .summary-table td:nth-child(4),
+  #summary .summary-table th:nth-child(5),
+  #summary .summary-table td:nth-child(5) {
+    width: 21%;
+  }
+
+
+  /*
+   * Remove all left padding from the
+   * first column of the main Summary.
+   */
+
+  #summary .summary-table th:first-child,
+  #summary .summary-table td:first-child {
+    padding-left: 0;
+  }
+
+
+  /*
+   * Main Summary row labels.
+   */
+
+  #summary .summary-table tbody th {
+    font-size: 0.82rem;
+  }
+
+
+  /*
+   * Column headings:
+   * Today / Event / Month / YTD
+   */
+
+  #summary .summary-table thead th {
+    font-size: 0.8rem;
+  }
+
+  #summary .summary-subhead {
+    font-size: 0.7rem;
+  }
+
+  /*
+   * Itemized table.
+   *
+   * Indent the individual item names.
+   */
+
+  #summary .summary-item-table tbody th:first-child {
+    padding-left: 16px;
+  }
+
+
+  /*
+   * Keep the active sort arrow close to
+   * its heading at the smaller phone size.
+   */
+
+  #summary .summary-sort-heading.active::before {
+    transform: translate(-10px, -2px);
+  }
+  
+}
+/* end PHONE - POS */
+
+/* Category rows in the All Items transaction filter. */
+.item-filter-menu .item-filter-category {
+  font-weight: 700;
+  border-top: 1px solid #e3e5ee;
+}
+
+.item-filter-menu .item-filter-category:first-child {
+  border-top: 0;
+}
+
+.item-filter-menu .item-filter-item {
+  padding-left: 30px;
+}

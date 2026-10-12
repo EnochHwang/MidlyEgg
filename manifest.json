@@ -1,0 +1,9 @@
+{
+  "name": "MidlyEgg POS",
+  "short_name": "MidlyEgg POS",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#656ec3",
+  "icons": []
+}

@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, user-scalable=no"
+  >
+
+  <meta
+    name="theme-color"
+    content="#656ec3"
+  >
+
+  <title>MidlyEgg</title>
+  
+  <link rel="icon" type="image/x-icon" href="icons/favicon.png">
+
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
+</head>
+
+<body>
+
+<header>
+
+  <button
+    id="homeButton"
+    class="home-button"
+    type="button"
+    aria-label="Return to POS"
+  >
+    <img
+      src="https://midlyegg.com/cdn/shop/files/MIDLYEGG_LOGO-04.png?v=1716166403&width=500"
+      alt="MidlyEgg"
+    >
+    
+    <span id="appVersion"></span>
+    
+  </button>
+
+
+  <div class="header-right">
+
+    <span id="status">
+      Ready
+    </span>
+
+
+    <div class="settings-menu">
+
+      <button
+        id="settingsButton"
+        class="settings-button"
+        type="button"
+        aria-label="Management menu"
+        aria-expanded="false"
+      >
+        ⚙
+      </button>
+
+
+      <div
+        id="settingsDropdown"
+        class="settings-dropdown"
+      >
+
+        <button
+          type="button"
+          data-page="summary"
+        >
+          Summary
+        </button>
+
+        <button
+          type="button"
+          data-page="tx"
+        >
+          Manage Transactions
+        </button>
+
+        <button
+          type="button"
+          data-page="items"
+        >
+          Manage Items
+        </button>
+
+        <button
+          type="button"
+          id="createReport"
+        >
+          Create Report
+        </button>
+        
+        <button
+          type="button"
+          id="updateAvailable"
+          class="update-available"
+          hidden
+        >
+          Update available
+        </button>
+        
+        <button
+          type="button"
+          data-page="help"
+        >
+          Help
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+  <main>
+
+    <!-- ===================================================
+         POS
+         =================================================== -->
+
+    <section
+      id="pos"
+      class="page active"
+    >
+
+      <div>
+        <div
+          id="cats"
+          class="cats"
+        ></div>
+
+        <div
+          id="products"
+          class="products"
+        ></div>
+      </div>
+
+
+      <aside>
+
+        <h2>
+          Cart
+        </h2>
+
+        <div id="cart"></div>
+
+
+        <div class="sale-totals">
+
+          <div class="sale-total-line">
+            <span>Total</span>
+
+            <b id="total">
+              $0.00
+            </b>
+          </div>
+
+
+          <div class="sale-total-line cash-received-line">
+            <label for="cashReceived">
+              Cash Received
+            </label>
+
+            <input
+              id="cashReceived"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="1"
+              placeholder="0"
+              autocomplete="off"
+            >
+          </div>
+
+
+          <div class="sale-total-line">
+            <span>Change</span>
+
+            <b id="changeDue">
+              $0.00
+            </b>
+          </div>
+
+        </div>
+
+
+        <div class="pay">
+
+          <button
+            id="cash"
+            disabled
+          >
+            CASH
+          </button>
+
+          <button id="credit">
+            CREDIT
+          </button>
+
+          <button
+            id="clear"
+            class="light"
+          >
+            CLEAR
+          </button>
+
+        </div>
+
+      </aside>
+    </section>
+
+
+    <!-- ===================================================
+         SUMMARY PAGE
+         =================================================== -->
+         
+    <section
+      id="summary"
+      class="page"
+    >
+
+      <div class="head">
+      
+        <div>
+          <h1>
+            Summary
+          </h1>
+        </div>
+        
+      </div>
+
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Today</th>
+            <th>Event
+              <div
+                id="summaryEventDays"
+                class="summary-subhead"
+              ></div>
+            </th>
+            <th>Month</th>
+            <th>YTD</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <th>Amount</th>
+            <td id="summaryTodayAmount">—</td>
+            <td id="summaryEventAmount">—</td>
+            <td id="summaryMonthAmount">—</td>
+            <td id="summaryYtdAmount">—</td>
+          </tr>
+
+          <tr>
+            <th>Transactions</th>
+            <td id="summaryTodayTransactions">—</td>
+            <td id="summaryEventTransactions">—</td>
+            <td id="summaryMonthTransactions">—</td>
+            <td id="summaryYtdTransactions">—</td>
+          </tr>
+
+          <tr>
+            <th>All Items</th>
+            <td id="summaryTodayItems">—</td>
+            <td id="summaryEventItems">—</td>
+            <td id="summaryMonthItems">—</td>
+            <td id="summaryYtdItems">—</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <div class="summary-item-detail">
+
+        <div
+          id="summaryHistoryStatus"
+          class="summary-history-status"
+        ></div>
+
+        <div class="summary-item-scroll">
+
+          <table
+            class="summary-table summary-item-table"
+          >
+
+            <thead>
+              <tr>
+
+                <th>&nbsp;</th>
+
+                <th
+                  class="summary-sort-heading"
+                  data-summary-sort="today"
+                >
+                  Today
+                </th>
+
+                <th
+                  class="summary-sort-heading active"
+                  data-summary-sort="event"
+                >
+                  Event
+                </th>
+
+                <th
+                  class="summary-sort-heading"
+                  data-summary-sort="month"
+                >
+                  Month
+                </th>
+
+                <th
+                  class="summary-sort-heading"
+                  data-summary-sort="ytd"
+                >
+                  YTD
+                </th>
+
+              </tr>
+            </thead>
+
+            <tbody id="summaryItemList"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+         
+    <!-- ===================================================
+         MANAGE TRANSACTIONS
+         =================================================== -->
+
+    <section
+      id="tx"
+      class="page"
+    >
+
+      <div class="head">
+
+        <div>
+          <h1>
+            Manage Transactions
+          </h1>
+        </div>
+
+      </div>
+
+      <div class="filters">
+
+        <div class="date-range-filter">
+
+          <label>
+            <span>From</span>
+
+            <input
+              type="date"
+              id="dateFrom"
+            >
+          </label>
+
+          <label>
+            <span>To</span>
+
+            <input
+              type="date"
+              id="dateTo"
+            >
+          </label>
+
+        </div>
+  
+        <!-- Custom payment filter -->
+        <details
+          id="paymentFilter"
+          class="item-filter payment-filter"
+        >
+          <summary>
+            All Payments
+          </summary>
+
+          <div
+            id="paymentFilterMenu"
+            class="item-filter-menu payment-filter-menu"
+          >
+
+            <button
+              type="button"
+              data-payment=""
+            >
+              All Payments
+            </button>
+
+            <button
+              type="button"
+              data-payment="Cash"
+            >
+              Cash
+            </button>
+
+            <button
+              type="button"
+              data-payment="Credit"
+            >
+              Credit
+            </button>
+
+          </div>
+        </details>
+
+
+        <!--
+          Keep the selected payment value separate
+          from the visual custom dropdown so the
+          transaction filtering code can continue
+          using #payment.value.
+        -->
+        <input
+          type="hidden"
+          id="payment"
+          value=""
+        >
+
+
+        <details id="itemFilter" class="item-filter">
+          <summary>All items</summary>
+          <div id="itemFilterMenu" class="item-filter-menu"></div>
+        </details>
+
+
+        <button
+          type="button"
+          id="clearFilters"
+          class="light clear-filters"
+        >
+          Clear Filters
+        </button>
+
+      </div>
+
+      <div class="transaction-total">
+
+        <div class="transaction-count">
+          <span id="countLabel">Transactions</span>
+
+          <b id="transactionCount">
+            0
+          </b>
+        </div>
+
+
+        <div
+          id="transactionHistoryStatus"
+          class="transaction-history-status"
+        ></div>
+
+
+        <div class="transaction-amount">
+          <span>Total</span>
+
+          <b id="transactionTotal">
+            $0.00
+          </b>
+        </div>
+
+      </div>
+
+      <div id="txList"></div>
+
+    </section>
+
+  </main>
+
+
+    <!-- ===================================================
+         MANAGE ITEMS
+         =================================================== -->
+
+    <section
+      id="items"
+      class="page"
+    >
+
+      <div class="head">
+
+        <div>
+          <h1>
+            Manage Items
+          </h1>
+
+          <p>
+            Add, edit, hide or delete items.
+          </p>
+        </div>
+
+
+        <button id="add">
+          + Add Item
+        </button>
+
+      </div>
+
+      <div id="itemList"></div>
+
+    </section>
+
+    
+  <!-- =====================================================
+       ADD / EDIT ITEM DIALOG
+       ===================================================== -->
+
+  <dialog id="itemDlg">
+
+    <form id="itemForm">
+
+      <h2 id="itemTitle">
+        Add Item
+      </h2>
+
+
+      <input
+        type="hidden"
+        id="iid"
+      >
+
+
+      <label>
+        Name
+
+        <input
+          id="iname"
+          required
+        >
+      </label>
+
+
+      <label>
+        Category
+
+        <div class="category-combo">
+
+          <input
+            id="icat"
+            required
+            autocomplete="off"
+          >
+
+          <button
+            type="button"
+            id="categoryDropdownButton"
+            class="category-dropdown-button"
+            aria-label="Show categories"
+          >
+            ▼
+          </button>
+
+          <div
+            id="categoryDropdown"
+            class="category-dropdown"
+          ></div>
+
+        </div>
+      </label>
+
+
+      <label>
+        Price
+
+        <input
+          id="iprice"
+          type="number"
+          min="0"
+          step="1"
+          required
+        >
+      </label>
+
+      <div class="inventory-fields">
+
+        <div class="current-inventory">
+          Current Inventory:
+          <b id="currentInventory">0</b>
+        </div>
+
+        <label>
+          Add Inventory
+
+          <input
+            id="iaddinventory"
+            type="number"
+            step="1"
+            value="0"
+          >
+        </label>
+
+      </div>
+
+      <label>
+        Display order
+
+        <input
+          id="isort"
+          type="number"
+          value="0"
+        >
+      </label>
+
+
+      <label class="check">
+
+        <input
+          id="iactive"
+          type="checkbox"
+          checked
+        >
+
+        Active
+
+      </label>
+
+
+      <div>
+
+        <button
+          type="button"
+          class="light close"
+        >
+          Cancel
+        </button>
+
+        <button>
+          Save
+        </button>
+
+      </div>
+
+    </form>
+
+  </dialog>
+
+
+<!-- ===================================================
+     HELP
+     =================================================== -->
+
+<section
+  id="help"
+  class="page"
+>
+
+  <div class="head">
+
+    <div>
+      <h1>
+        Help
+      </h1>
+
+    </div>
+
+  </div>
+
+
+  <div class="help-content">
+
+    <h2>Making a Sale</h2>
+
+    <p>
+      Tap the
+      <img
+      src="https://midlyegg.com/cdn/shop/files/MIDLYEGG_LOGO-04.png?v=1716166403&width=500"
+      height="20"
+      alt="MidlyEgg"
+      >
+      logo to go to the main POS screen if not already there.
+    </p>
+    
+    <p>
+      Select a category, then tap an item to add it to
+      the cart. Tap an item again to increase
+      its quantity. Long-press an item to decrease its
+      quantity.
+    </p>
+
+    <h3>Cash Sale</h3>
+
+    <p>
+      Enter the amount of cash received. The amount of
+      change due will be calculated automatically.
+      Tap <b>CASH</b> to complete the sale.
+    </p>
+
+
+    <h3>Credit Sale</h3>
+
+    <p>
+      Tap <b>CREDIT</b> to complete a credit-card sale.
+    </p>
+
+
+    <h3>Clear a Sale</h3>
+
+    <p>
+      Tap <b>CLEAR</b> to remove all items from the cart and start over.
+    </p>
+
+
+    <h2>Summary</h2>
+
+    <p>
+      Open <b>Summary</b> from the gear menu to view sales
+      totals and item quantities.
+    </p>
+
+    <p>
+      Today shows today's sales. Event shows the current
+      or most recent selling event. On a weekend an event can span from Friday to Sunday.
+      Month shows sales for the current month, and YTD shows sales for the
+      current year.
+    </p>
+
+    <p>
+      In the items detail list, tap <b>Today</b>, <b>Event</b>, <b>Month</b>,
+      or <b>YTD</b> to sort the items by quantity sold. The
+      down arrow shows the currently selected sort.
+    </p>
+
+
+    <h2>Manage Transactions</h2>
+
+    <p>
+      Open <b>Manage Transactions</b> from the gear menu to
+      review previous sales.
+    </p>
+
+    <p>
+      Use the <b>From</b> and <b>To</b> dates to select a date range.
+      Transactions can be filtered by <b>Payment</b> type (cash or credit),
+      <b>Transactions</b> or <b>Items</b>.
+    </p>
+
+    <p>
+      When <b>All Transactions</b> is selected the listing will be by transactions.
+      When <b>All Items</b> or combinations of single items is selected the listing will be by items.
+    </p>
+
+
+    <h2>Manage Items</h2>
+
+    <p>
+      Open <b>Manage Items</b> from the gear menu to add or
+      change items for sale.
+    </p>
+
+    <p>
+      Tap <b>+ Add Item</b> to create a new item. Enter its
+      <b>Name</b>, <b>Category</b>, <b>Price</b>, <b>Inventory</b> quantity, <b>Display
+      order</b>, and whether the item is <b>Active</b>. An existing category can
+      be selected from the dropdown. Typing in a new category name
+      will create a new category. The display order number orders the items
+      within that same category in the POS screen.
+    </p>
+
+    <p>
+      <b>Edit</b> an existing item to change its information
+      or adjust inventory. Inventory can be increased
+      or decreased by entering a positive or negative
+      amount in <b>Add Inventory</b>.
+    </p>
+
+    <p>
+      Inactive items remain in the system but are not
+      shown as products on the POS screen.
+    </p>
+
+
+    <h2>Inventory</h2>
+
+    <p>
+      Inventory is reduced automatically when a sale is
+      completed.
+    </p>
+
+    <p>
+      Use <b>Manage Items</b> when inventory needs to be added
+      or adjusted.
+    </p>
+
+    <h2>Create Report</h2>
+
+    <p>
+    Creating a report and saving it to a spreadsheet is available only on a desktop browser. 
+    The report allows you to specify a date range for the transactions to be included.
+    </p>
+    
+    <h2>Offline Use</h2>
+
+    <p>
+      MidlyEgg POS can continue operating when the
+      internet connection is temporarily unavailable.
+      Sales are stored on the device and will be automatically archived
+      when the connection is available again.
+    </p>
+
+  </div>
+
+</section>
+
+
+  <!-- =====================================================
+       CREATE REPORT DIALOG
+       ===================================================== -->
+
+  <dialog id="createReportDlg">
+
+    <form id="createReportForm">
+
+      <h2>
+        Create Report
+      </h2>
+
+      <label>
+        From
+
+        <input
+          id="reportDateFrom"
+          type="date"
+          required
+        >
+      </label>
+
+      <label>
+        To
+
+        <input
+          id="reportDateTo"
+          type="date"
+          required
+        >
+      </label>
+
+      <label>
+        Filename
+
+        <input
+          id="reportFileName"
+          type="text"
+          required
+        >
+      </label>
+
+      <div>
+
+        <button
+          type="button"
+          id="cancelCreateReport"
+          class="light"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          id="confirmCreateReport"
+        >
+          Create
+        </button>
+
+      </div>
+
+    </form>
+
+  </dialog>
+
+  
+  <!-- =====================================================
+       GENERAL CONFIRMATION DIALOG
+       ===================================================== -->
+
+  <dialog id="confirm">
+
+    <form method="dialog">
+
+      <h2 id="ctitle">
+        Confirm
+      </h2>
+
+
+      <p id="ctext"></p>
+
+
+      <div>
+
+        <button
+          value="cancel"
+          class="light"
+        >
+          Cancel
+        </button>
+
+        <button
+          value="yes"
+          class="danger"
+        >
+          Confirm
+        </button>
+
+      </div>
+
+    </form>
+
+  </dialog>
+
+
+  <div id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script> <!-- for creating Excel sheet -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
