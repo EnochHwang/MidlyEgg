@@ -13,7 +13,18 @@
  * On a new startup, this Google Sheet is automatically created in the root directory of My Drive.
  * The Google Sheet can be renamed and moved to any location within the same Google My Drive.
  * If the Sheet is deleted, a new one will be created.
- 
+ *
+ * To change the login password:
+ * 1. Open the Apps Script project at
+ *      https://script.google.com/home/projects/1-zODWmxhFQ7zheq9LkBISLxkoV9Tx4XYtx7xbpa2zPf9MGQTSE-7spDd/edit
+ * 2. Open Project Settings → Script Properties.
+ * 3. Add the property AUTH_SETUP_PASSWORD with your chosen password (minimum 8 characters).
+ * 4. SAVE
+ * 5. Return to the editor.
+ * 6. Select setupPOSPassword from the function dropdown, and click Run.
+ * 7. Authorize the script if prompted.
+ *
+ * 
  * 2026 October Enoch Hwang
  *
  */
@@ -516,7 +527,11 @@ async function googleRequest(
         body:
           JSON.stringify({
             action,
-            ...data
+            ...data,
+            authToken:
+              localStorage.getItem(
+                "midlyegg_auth_token"
+              ) || ""
           })
       }
     );
@@ -544,6 +559,110 @@ async function googleRequest(
 
 
   return result;
+}
+
+
+/* =========================================================
+   DEVICE AUTHORIZATION
+   ========================================================= */
+
+function showPOSLogin() {
+
+  return new Promise((resolve) => {
+
+    const overlay = $("#posLoginOverlay");
+    const form = $("#posLoginForm");
+    const button = $("#posLoginButton");
+    const errorElement = $("#posLoginError");
+    const passwordInput = $("#posLoginPassword");
+
+    overlay.hidden = false;
+    errorElement.textContent = "";
+    passwordInput.value = "";
+
+    form.onsubmit = async (event) => {
+
+      event.preventDefault();
+
+      button.disabled = true;
+      errorElement.textContent = "";
+
+      try {
+
+        const result = await googleRequest(
+          "login",
+          { password: passwordInput.value }
+        );
+
+        if (!result.token) {
+          throw new Error("No authorization token returned.");
+        }
+
+        localStorage.setItem(
+          "midlyegg_auth_token",
+          result.token
+        );
+
+        passwordInput.value = "";
+        overlay.hidden = true;
+        resolve();
+
+      } catch (error) {
+
+        errorElement.textContent =
+          error.message || "Sign-in failed.";
+
+      } finally {
+
+        button.disabled = false;
+      }
+    };
+
+    passwordInput.focus();
+  });
+}
+
+
+async function ensurePOSAuthorized() {
+
+  const token =
+    localStorage.getItem("midlyegg_auth_token");
+
+  if (!token) {
+    await showPOSLogin();
+    return;
+  }
+
+  if (!navigator.onLine) {
+    return;
+  }
+
+  try {
+
+    await googleRequest("verifySession");
+
+  } catch (error) {
+
+    if (
+      /Unauthorized device|not configured/i.test(
+        error.message || ""
+      )
+    ) {
+
+      localStorage.removeItem(
+        "midlyegg_auth_token"
+      );
+
+      await showPOSLogin();
+
+    } else {
+
+      console.warn(
+        "Unable to verify POS authorization:",
+        error
+      );
+    }
+  }
 }
 
 
@@ -8000,7 +8119,8 @@ async function initializeApp() {
     $("#status").textContent =
       "Starting...";
 
-
+    await ensurePOSAuthorized();
+    
     await openDatabase();
     await initializeMetadata();
     

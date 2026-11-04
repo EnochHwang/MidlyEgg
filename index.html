@@ -930,6 +930,36 @@
   </dialog>
 
 
+  <!-- POS Login -->
+  <div id="posLoginOverlay" class="pos-login-overlay" hidden>
+
+    <form id="posLoginForm" class="pos-login-form">
+
+      <h2>MidlyEgg POS</h2>
+
+      <p>Enter the password to authorize this device.</p>
+
+      <label for="posLoginPassword">Password</label>
+
+      <input
+        id="posLoginPassword"
+        type="password"
+        autocomplete="current-password"
+        required
+      >
+
+      <p id="posLoginError" class="pos-login-error" role="alert"></p>
+
+      <button id="posLoginButton" type="submit">
+        Sign in
+      </button>
+
+    </form>
+
+  </div>
+
+  
+  
   <div id="toast"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script> <!-- for creating Excel sheet -->
