@@ -1,4 +1,4 @@
-const CACHE_NAME = "midlyegg-pos-v1";
+const CACHE_NAME = "midlyegg-pos-v5";
 
 const CACHE_FILES = [
   "./",
